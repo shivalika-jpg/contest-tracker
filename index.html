@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codeforces Contest Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Upcoming Codeforces Contests</h1>
+    <div id="upcoming-contests"></div>
+
+    <h1>Past Codeforces Contests (Last 7 Days)</h1>
+    <div id="past-contests"></div>
+
+    <h1>Bookmarked Contests</h1>
+    <div id="bookmarked-contests"></div>
+    <h2>Set Contest Reminder</h2>
+<input type="text" id="phoneNumber" placeholder="Enter your phone number">
+<button onclick="sendSMS()">Send SMS</button>
+
+<script>
+async function sendSMS() {
+    const phoneNumber = document.getElementById("phoneNumber").value;
+
+    const response = await fetch("http://localhost:5000/send-sms", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            phoneNumber: phoneNumber,
+            message: "Reminder: Your Codeforces contest is starting soon!"
+        }),
+    });
+
+    const data = await response.json();
+    alert(data.success ? "SMS Sent!" : "Error sending SMS");
+}
+</script>
+
+    <script src="script.js"></script>
+</body>
+</html>
